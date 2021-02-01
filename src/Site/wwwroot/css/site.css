@@ -1,0 +1,278 @@
+﻿.banner-home {
+    width: 1950px !important;
+    left: -382px !important;
+}
+
+.marcas-box {
+    padding-bottom: 45px !important;
+}
+
+.logo-image {
+    width: 85px;
+    height: 85px !important;
+}
+
+.active-logo {
+    background: #fff !important;
+}
+
+.logo-select {
+    cursor: pointer
+}
+
+.elementor-widget-apus_listings_search_form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+    .elementor-widget-apus_listings_search_form .elementor-widget-container {
+        width: 64%;
+    }
+
+.marca-item {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    padding: 7px;
+    cursor: pointer;
+}
+
+.marca-item-active {
+    background: #ff431ee3 !important;
+}
+
+.field-region-logo {
+    width: 100% !important;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px !important;
+}
+
+.box-scroll-y {
+    overflow-y: scroll;
+    height: calc(100vh - 62px);
+}
+
+div.job_listing .grid-contact-inner .listing-phone {
+    margin-left: initial !important
+}
+
+.box-itens-autorizadas {
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.autorizadas-itens {
+    margin-bottom: 10px;
+}
+
+.item-autorizadas-title {
+    padding: 10px 0px;
+}
+
+.btn-vermais {
+    width: 100%;
+    padding: 5px 0px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.box-card-autorizadas {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card-auth {
+    max-width: 280px;
+}
+
+.box-buttons {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.btn-flyto {
+    width: 100%;
+    padding: 5px 0px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    background: #1b2639 !important;
+    border-color: #1b2639 !important;
+}
+
+.fancybox-content {
+    padding: 0px 55px !important;
+}
+
+.vermais-modal h2, .vermais-modal h4 {
+    font-weight: 600;
+}
+
+.vermais-modal h4 {
+    margin: 20px 0px 10px 0px;
+}
+
+.vermais-modal h2 {
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.vermais-modal p {
+    font-size: 16px;
+}
+
+.vermais-modal .contact-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .vermais-modal .contact-div p:first-child {
+        flex: 0.8;
+    }
+
+    .vermais-modal .contact-div p {
+        margin-bottom: 0px !important;
+    }
+
+.vermais-modal .btn-route {
+    background: #ea2600;
+    border: none;
+    color: #fff;
+    padding: 7px;
+    border-radius: 7px;
+    width: 100%;
+    margin: 23px 0px;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+}
+
+.swal2-popup {
+    font-size: 1.6rem !important;
+}
+
+.select-home-banner {
+    background: transparent;
+    margin-bottom: 0px;
+    height: 100% !important;
+    width: 90%;
+    padding: 0 0 0px 0;
+    border-width: 0 0 1px;
+    border-color: transparent;
+    margin-left: 15px;
+}
+
+    .select-home-banner:focus {
+        border-color: transparent;
+    }
+.megamenu > li > a {
+    font-size: 17px !important;
+}
+
+.mapa-busca {
+    height: calc(100vh - 62px);
+    outline: none;
+}
+
+#section-about .elementor-element-populated {
+
+    margin: 40px 0px;
+
+}
+#section-about .elementor-widget-heading .elementor-heading-title {
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 47px;
+    color: #fff;
+}
+
+
+#section-about .elementor-text-editor p {
+    font-size: 17px;
+    color:#fff !important;
+}
+#section-about .elementor-button {
+    background-color: #ff431e !important;
+}
+#section-about .elementor-widget:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+#section-about {
+    width: 1950px !important;
+    left: -382px !important;
+}
+#section-contato {
+    width: 1950px !important;
+    left: -382px !important;
+}
+
+@media(max-width:900px) {
+    .vermais-modal .contact-div {
+        flex-direction: column;
+    }
+
+    .box-card-autorizadas {
+        flex-direction: column;
+    }
+    .banner-home {
+        width: 100% !important;
+        left: 0px !important;
+    }
+    .elementor-column-gap-extended > .elementor-row > .elementor-column > .elementor-element-populated{
+        padding: 0px !important
+    }
+    .elementor-89 .elementor-element.elementor-element-23f89f1:not(.elementor-motion-effects-element-type-background), .elementor-89 .elementor-element.elementor-element-23f89f1 > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+        padding: 20px;
+    }
+
+    .mobile-filters-home {
+        height: 50px !important;
+        border-radius: 5px !important;
+    }
+    .elementor-widget-apus_listings_search_form .elementor-widget-container {
+        width: 75% !important;
+    }
+    .elementor-249 .elementor-widget-container {
+        margin: 10px 5px 5px 5px !important;
+    }
+    .btn-filter{
+        width: 100% !important
+    }
+    .card-auth{
+        max-width: 100%;
+    }
+    .mapa-busca-mobile-active {
+        display: block !important;
+        height: 100% !important;
+    }
+    .mapa-busca {
+        width: 100%;
+        display: none;
+        height: 50%;
+    }
+    .vermais-modal {
+        height: 85% !important;
+    }
+    #como-funciona, .section-texts, .section-text, #section-about, #section-contato {
+        width: 100% !important;
+        left: 0 !important;
+    }
+    .box-texts .elementor-element {
+        padding: 0px 0px 15px 0px !important;
+    }
+
+    .fancybox-content {
+        width: 100% !important;
+    }
+
+    #section-about .elementor-element-populated {
+        padding: 0px 15px !important;
+    }
+}

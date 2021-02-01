@@ -1,0 +1,111 @@
+﻿@page
+@model LoginModel
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Login";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="/images/logos/favicon.ico" />
+    <title>Online Motor - Admin</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <link href="~/css/nucleo/css/nucleo.css" rel="stylesheet" />
+    <link href="~/css/fontawesome/all.min.css" rel="stylesheet" />
+    <link href="~/css/argon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+</head>
+
+<body class="bg-default">
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9 banner-overlay-image">
+            <span class="mask bg-gradient-default opacity-7"></span>
+            <div class="container">
+                <div class="header-body text-center mb-7">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-5 col-lg-6 col-md-8 px-5">
+                            <h1 class="text-white" style="font-size: 36px;">Online Motor | Login</h1>
+                            <p class="text-lead text-white">Bem vindo ao gestor de conteudo.<br /> Aqui as autorizadas poderão cadastrar seus locais no mapa.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="separator separator-bottom separator-skew zindex-100">
+                <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+                </svg>
+            </div>
+        </div>
+        <!-- Page content -->
+        <div class="container mt--8 pb-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-7">
+                    <div class="card bg-secondary border-0 mb-0">
+                        <div class="card-body px-lg-5 py-lg-5">
+                            <div class="text-center text-muted mb-4">
+                                <span>Entre com suas credenciais</span>
+                            </div>
+                            <form  method="post">
+                                <div class="form-group mb-3">
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                        </div>
+                                        <input asp-for="Input.Email" class="form-control" placeholder="Email" type="email">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                        </div>
+                                        <input asp-for="Input.Password" class="form-control" placeholder="Password" type="password">
+                                    </div>
+                                </div>
+                                <div class="custom-control custom-control-alternative custom-checkbox">
+                                    <input class="custom-control-input" id=" customCheckLogin" type="checkbox"  asp-for="Input.RememberMe">
+                                    <label class="custom-control-label" for=" customCheckLogin">
+                                        <span class="text-muted">Lembrar de mim</span>
+                                    </label>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-orange my-4" >Entrar</button>
+                                </div>
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-6">
+                        </div>
+                        <div class="col-6 text-right">
+                            <a asp-area="Identity" asp-page="/Account/Register" class="text-light"><small>Criar nova conta</small></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/js-cookie/js.cookie.js"></script>
+    <script src="~/js/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="~/js/jquery-scroll-lock/jquery-scrollLock.min.js"></script>
+    <script src="~/js/argon.js"></script>
+</body>
+
+</html>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

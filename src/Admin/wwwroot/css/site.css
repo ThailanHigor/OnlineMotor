@@ -1,0 +1,29 @@
+﻿.img-marca-admin {
+    width: 60px !important;
+    height: 60px !important;
+    background: none !important;
+    border: none !important;
+}
+.mapboxgl-ctrl-geocoder {
+    min-width: 600px !important;
+}
+
+.rounded-circle, .avatar.rounded-circle img{
+    border-radius:initial !important;
+}
+.banner-overlay-image {
+    min-height: 360px;
+    background-image: url('https://elasticbeanstalk-us-east-2-532503634833.s3.us-east-2.amazonaws.com/images/home-banner.jpg') !important;
+    background-size: cover !important;
+    background-position: center top !important;
+}
+
+.btn-orange {
+    border-color: #ea2600 !important;
+    background-color: #ea2600 !important;
+    color: #fff;
+}
+
+.btn-orange:hover {
+    color: #fff;
+}

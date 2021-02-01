@@ -1,0 +1,245 @@
+﻿@model Data.Models.Authorized
+@{
+    ViewData["Title"] = "Autorizadas";
+}
+
+<div class="header pb-6 d-flex align-items-center" style="min-height: 360px; background-image: url('https://elasticbeanstalk-us-east-2-532503634833.s3.us-east-2.amazonaws.com/images/home-banner.jpg'); background-size: cover; background-position: center top;">
+    <!-- Mask -->
+    <span class="mask bg-gradient-default opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+        <div class="row">
+            <div class="col-lg-7 col-md-10">
+                <h1 class="display-2 text-white">Autorizadas</h1>
+                <p class="text-white mt-0 mb-5">Cadastre um novo local no mapa para a sua autorizada</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+
+        <div class="col-xl-12 order-xl-1">
+
+            <div class="card">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Preencha as informações abaixo</h3>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <h6 class="heading-small text-muted mb-4">Dados da Autorizada</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Nome</label>
+                                        <input name="Nome" value="@Model.Nome" required type="text" id="input-username" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Telefone</label>
+                                        <input name="Telefone" value="@Model.Telefone" required type="text" id="input-telefone" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-first-name">E-mail</label>
+                                        <input name="Email" value="@Model.Email" required type="email" id="input-first-name" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-first-name">Marca</label>
+                                        <select name="Marca" class="form-control" required>
+                                            <option value="">Selecione</option>
+                                            <option selected="@(Model.Marca == "ford" ? "selected": null)" value="ford">Ford</option>
+                                            <option selected="@(Model.Marca == "fiat" ? "selected": null)" value="fiat">Fiat</option>
+                                            <option selected="@(Model.Marca == "gm" ? "selected": null)" value="gm">Chevrolet</option>
+                                            <option selected="@(Model.Marca == "vw" ? "selected": null)" value="vw">Volkswagen</option>
+                                            <option selected="@(Model.Marca == "honda" ? "selected": null)" value="honda">Honda</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4" />
+                        <!-- Address -->
+                        <h6 class="heading-small text-muted mb-4">Dados para exibição no site</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-address">Breve Titulo ou Slogan (Máximo 100 caracteres)</label>
+                                        <input name="Titulo" required id="input-address" value="@Model.Titulo" class="form-control" type="text" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-city">Sobre a Autorizada (breve histórico ou diferencial)</label>
+                                        <textarea name="Descricao" required rows="4" class="form-control ckeditorField">@Model.Descricao</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-city">Horários de Funcionamento</label>
+                                        <textarea name="HorarioFuncionamento" required rows="4" class="form-control ckeditorField">@Model.HorarioFuncionamento</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-city">Serviços Prestados</label>
+                                        <textarea name="Servicos" required rows="4" class="form-control ckeditorField">@Model.Servicos</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4" />
+                        <!-- Description -->
+                        <h6 class="heading-small text-muted mb-4">Endereço e Localização</h6>
+                        <div class="text-left">
+                            <label class="form-control-label">Encontre o endereço no mapa e clique no local para definir o ponto</label>
+                            <div class="" id="map" style=" height: 400px;outline: none;"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <br />
+                                    <label class="form-control-label" for="input-username">Agora que procurou no mapa, verifique o endereço abaixo. Se não for o correto, por favor corrija aqui mesmo.</label>
+                                    <input type="text" name="Endereco" value="@Model.Endereco" required id="input-checkendereco" class="form-control">
+                                    <input type="hidden" name="Latitude" value="@Model.Latitude" id="input-latitude" class="form-control">
+                                    <input type="hidden" name="Longitude" value="@Model.Longitude" id="input-longitude" class="form-control">
+                                    <input type="hidden" name="DataCadastro" value="@Model.DataCadastro">
+                                    @Html.HiddenFor(x => x.Excluido)
+                                    @Html.HiddenFor(x => x.Liberado)
+                                    @Html.HiddenFor(x => x.DataAtualizacao)
+                                    @Html.HiddenFor(x => x.DataCadastro)
+                                    @Html.HiddenFor(x => x.UserId)
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4" />
+                        <div class="text-left">
+                            <button type="submit" class="btn btn-success my-4">Cadastrar</button>
+                            <a href="/autorizadas" class="btn btn-primary text-white">Voltar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+
+</div>
+
+<style>
+    .ck-editor__editable {
+        min-height: 200px;
+    }
+</style>
+
+@section Scripts{
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js'></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/24.0.0/classic/ckeditor.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+
+
+    <script>
+        jQuery("#input-telefone")
+            .mask("(99) 9999-9999?9")
+            .focusout(function (event) {
+                var target, phone, element;
+                target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+                phone = target.value.replace(/\D/g, '');
+                element = $(target);
+                element.unmask();
+                if (phone.length > 10) {
+                    element.mask("(99) 99999-999?9");
+                } else {
+                    element.mask("(99) 9999-9999?9");
+                }
+            });
+
+        var allEditors = document.querySelectorAll('.ckeditorField');
+        for (var i = 0; i < allEditors.length; ++i) {
+            ClassicEditor
+                .create(allEditors[i])
+                .then(editor => {
+                    editor.ui.view.editable.element.style.height = '200px';
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+    </script>
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoidGhhaWxhbiIsImEiOiJja2s1dm9ua3EwOTg3MnZueHlnenF5dmVrIn0.GYmBX3kqkld64YHp8dIwhA';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-44.14742133942934, -22.513062453690466],
+            zoom: 11
+        });
+
+        var geocoder = new MapboxGeocoder({ // Initialize the geocoder
+            accessToken: mapboxgl.accessToken, // Set the access token
+            mapboxgl: mapboxgl, // Set the mapbox-gl instance
+            marker: true, // Do not use the default marker style
+            placeholder: "Procure também pelo endereço"
+        });
+        map.addControl(geocoder);
+
+        let mapMarkers = []
+        map.on('style.load', function () {
+            geocoder.on('result', function (data) {
+                $("#input-checkendereco").val(data.result.place_name)
+                $("#input-latitude").val(data.result.center[1].toString())
+                $("#input-longitude").val(data.result.center[0].toString())
+            });
+
+            map.on('click', function (e) {
+                mapMarkers.forEach((marker) => marker.remove())
+
+                var coordinates = e.lngLat;
+                var marker = new mapboxgl.Marker() // initialize a new marker
+                    .setLngLat(coordinates) // Marker [lng, lat] coordinates
+                    .addTo(map); // Add the marker to the map
+
+                $.ajax({
+                    url: `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates.lng}%2C${coordinates.lat}.json?access_token=${mapboxgl.accessToken}&autocomplete=true&country=br&types=address&limit=1`,
+                    type: 'GET',
+                    dataType: 'json',
+                    async: false
+
+                })
+                    .done(function (data) {
+                        if (data.features.length > 0) {
+                            $("#input-checkendereco").val(data.features[0].place_name)
+                            $("#input-latitude").val(coordinates.lat.toString())
+                            $("#input-longitude").val(coordinates.lng.toString())
+                        }
+                    })
+
+                mapMarkers.push(marker)
+            });
+        });
+
+
+
+    </script>
+}

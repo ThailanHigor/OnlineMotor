@@ -1,0 +1,436 @@
+﻿@model Site.ViewModels.SearchViewModel
+
+<div id="apus-main-content">
+    <section id="main-container" class="inner">
+
+        <div id="primary" class="content-area">
+            <div class="entry-content">
+                <div id="main" class="site-main">
+                    <div class="job_listings" data-location="" data-keywords="" data-show_filters="true"
+                         data-show_pagination="false" data-per_page="9" data-orderby="featured" data-order="DESC"
+                         data-categories="" data-disable-form-state-storage="" data-post_id="610">
+                        <div class="apus-half-map-layout apus-half-map-layout-v1 apus-listing-warpper">
+                            <div class="row no-margin wrapper-half-map">
+                                <div class="col-lg-4 col-md-8 col-xs-12 no-padding list-content-wrapper box-scroll-y">
+                                    <div class="list-content clearfix">
+                                        <div class="wrapper-filters1 filter-v1 clearfix ">
+
+
+                                            <form class="job_filters job_filters-location">
+                                                <h4 class="title-amenity">Filtros</h4>
+
+                                                <div class="filter-inner search_jobs">
+                                                    <div class="fields-filter list-inner-full">
+                                                        <div class="wrapper-top-filter clearfix">
+                                                            <div class="field-region field-region1">
+                                                                <select class="select-field-region select-field-region1" id="search-states"
+                                                                        data-next="2" autocomplete="off"
+                                                                        data-selected="@ViewBag.State">
+                                                                    <option value="">Selecione o Estado</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="field-region field-region1">
+                                                                <select class="select-field-region select-field-region1" id="search-cities"
+                                                                        data-next="2" autocomplete="off"
+                                                                        data-selected="@ViewBag.City">
+                                                                    <option value="Selecione uma cidade" selected>Selecione uma cidade</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="wrapper-top-filter clearfix">
+                                                            <div class="field-region field-region-logo" style="width: 100% !important;">
+                                                                <img src="https://elasticbeanstalk-us-east-2-532503634833.s3.us-east-2.amazonaws.com/images/logos/ford.png" class="marca-item @(ViewBag.Brand == "ford" ? "marca-item-active" : "")" data-id="ford" />
+                                                                <img src="https://elasticbeanstalk-us-east-2-532503634833.s3.us-east-2.amazonaws.com/images/logos/fiat.png" class="marca-item @(ViewBag.Brand == "fiat" ? "marca-item-active" : "")" data-id="fiat" />
+                                                                <img src="https://elasticbeanstalk-us-east-2-532503634833.s3.us-east-2.amazonaws.com/images/logos/gm.png" class="marca-item @(ViewBag.Brand == "gm" ? "marca-item-active" : "")" data-id="gm" />
+                                                                <img src="https://elasticbeanstalk-us-east-2-532503634833.s3.us-east-2.amazonaws.com/images/logos/vw.png" class="marca-item @(ViewBag.Brand == "vw" ? "marca-item-active" : "")" data-id="vw" />
+                                                                <img src="https://elasticbeanstalk-us-east-2-532503634833.s3.us-east-2.amazonaws.com/images/logos/honda.png" class="marca-item @(ViewBag.Brand == "honda" ? "marca-item-active" : "")" data-id="honda" />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="submit-filter">
+                                                            <button class="btn btn-theme btn-filter" type="button" style="border-radius: 6px;">
+                                                                Filtrar
+                                                            </button>
+                                                        </div>
+
+                                                        <div class="listing-search-result-filter"></div>
+
+                                                    </div>
+
+                                                    <div class="showing_jobs"></div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <hr />
+                                        <div class=" main-results">
+                                            <div class="main-content-listings">
+
+                                                <div class="listing-action clearfix">
+                                                    <div class="row flex-middle">
+                                                        <div class="col-xs-6 col-md-8">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="job_listings job_listings_cards clearfix row box-card-autorizadas">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-4 col-xs-12 no-padding half-map">
+                                    <div id="map" class="apus-listing-map fix-map hidden-sm hidden-xsa mapa-busca"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- #main -->
+            </div>
+        </div><!-- #primary -->
+    </section>
+
+</div><!-- .site-content -->
+
+
+
+
+
+@section Scripts{
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
+    <script src="https://elasticbeanstalk-us-east-2-532503634833.s3.us-east-2.amazonaws.com/cidades-estados-utf8.js"></script>
+
+    <script>
+
+
+
+
+        var latBusca = 0.0;
+        var longBusca = 0.0;
+
+        $(".btn-filter").click(function () {
+            var brand = $(".marca-item-active").data("id")
+            var state = $("#search-states").val()
+            var city = $("#search-cities").val()
+
+            console.log(brand)
+            if (!brand) {
+                Swal.fire({ icon: 'error', title: 'Atenção', text: 'Você precisa informar a Marca de seu veículo.', confirmButtonColor: '#ff431e' })
+                return false;
+            }
+            console.log(state)
+            if (!state || state === "Selecione um estado") {
+                Swal.fire({ icon: 'error', title: 'Atenção', text: 'Você precisa informar o Estado.', confirmButtonColor: '#ff431e' })
+                return false;
+            }
+            console.log(city)
+            if (!city || city === "Selecione uma cidade") {
+                Swal.fire({ icon: 'error', title: 'Atenção', text: 'Você precisa informar a cidade.', confirmButtonColor: '#ff431e' })
+                return false;
+            }
+            mapFunc.cleanPins();
+            mapFunc.searchAndGoToLocation(city, state)
+            mapFunc.getPinsFromBrand(brand)
+        });
+
+        $("body").delegate(".btn-flyto", "click", function () {
+            var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+                $.fancybox.open($("#map"), {
+                    touch: true
+                });
+                map.resize();
+            }
+
+            let lat = $(this).data("lat");
+            let long = $(this).data("long");
+            mapFunc.mapFlyTo(lat, long);
+        });
+
+
+        $("body").delegate(".btn-vermais", "click", function () {
+            let modal = '.open-modal-' + $(this).data("id");
+            console.log(modal)
+            $.fancybox.open($(modal), {
+                touch: false
+            });
+        });
+
+
+        $(document).ready(function () {
+            new dgCidadesEstados({
+                cidade: document.getElementById('search-cities'),
+                estado: document.getElementById('search-states'),
+                change: false
+            });
+
+
+            setTimeout(function () {
+                var state = $("#search-states").data("selected");
+                var city = $("#search-cities").data("selected");
+                var brand = $(".marca-item-active").data("id")
+
+                if (state) {
+                    $("#search-states").val(state)
+                    $("#search-states").change();
+                    $("#search-cities").val(city)
+
+                    mapFunc.searchAndGoToLocation(city, state)
+                    mapFunc.getPinsFromBrand(brand)
+                }
+
+            }, 500)
+
+        });
+
+
+
+        mapboxgl.accessToken = 'pk.eyJ1IjoidGhhaWxhbiIsImEiOiJja2s1dm9ua3EwOTg3MnZueHlnenF5dmVrIn0.GYmBX3kqkld64YHp8dIwhA';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-44.14742133942934, -22.513062453690466],
+            pitch: 60,
+            bearing: 0,
+            zoom: 10
+        });
+
+        map.addControl(
+            new mapboxgl.GeolocateControl({
+                positionOptions: {
+                    enableHighAccuracy: true
+                },
+                trackUserLocation: true,
+                showAccuracyCircle: false
+            })
+        );
+
+        map.on('load', function () {
+            // Center the map on the coordinates of any clicked symbol from the 'symbols' layer.
+            map.on('click', 'symbols', function (e) {
+                map.flyTo({
+                    center: e.features[0].geometry.coordinates,
+                    zoom: 12
+                });
+            });
+
+            // Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
+            map.on('mouseenter', 'symbols', function () {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', 'symbols', function () {
+                map.getCanvas().style.cursor = '';
+            });
+
+            map.on('click', 'symbols', function (e) {
+                var coordinates = [-22.513062453690466, -44.14742133942934];
+                var description = '<strong>Truckeroo</strong><p><a href="http://www.truckeroodc.com/www/" target="_blank">Truckeroo</a> brings dozens of food trucks, live music, and games to half and M Street SE (across from Navy Yard Metro Station) today from 11:00 a.m. to 11:00 p.m.</p>'
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates) > 180) {
+                    coordinates += e.lngLat.lng > coordinates ? 360 : -360;
+                }
+
+                new mapboxgl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML(description)
+                    .addTo(map);
+            });
+        });
+
+
+
+        const mapFunc = {
+
+            init: function () {
+
+            },
+            searchAndGoToLocation: function (city, state) {
+                var city = city;
+                var state = state;
+
+                var token = "pk.eyJ1IjoidGhhaWxhbiIsImEiOiJja2s1dm9ua3EwOTg3MnZueHlnenF5dmVrIn0.GYmBX3kqkld64YHp8dIwhA"
+
+                $.ajax({
+                    url: `https://api.mapbox.com/geocoding/v5/mapbox.places/${city} ${state}.json?access_token=${token}&autocomplete=true&country=br&types=place&limit=1&language=pt&languageMode=strict`,
+                    type: 'GET',
+                    dataType: 'json',
+                    async: false
+
+                })
+                    .done(function (data) {
+                        latBusca = data.features[0].center[1]
+                        longBusca = data.features[0].center[0]
+
+                        map.flyTo({
+                            center: data.features[0].center,
+                            zoom: 12
+                        });
+                    })
+            },
+            setPinsInMap: function (map, pinsCoordinates) {
+                map.loadImage(
+                    '/images/logos/pin.png',
+                    function (error, image) {
+                        if (error) throw error;
+                        map.addImage('custom-marker', image);
+                        // Add a GeoJSON source with 3 points.
+                        map.addSource('points', {
+                            'type': 'geojson',
+                            'data': {
+                                'type': 'FeatureCollection',
+                                'features': pinsCoordinates
+                            }
+                        });
+
+                        // Add a symbol layer
+                        map.addLayer({
+                            'id': 'points',
+                            'type': 'symbol',
+                            'source': 'points',
+                            'layout': {
+                                'icon-image': 'custom-marker',
+                                'icon-size': 0.8,
+                                'text-field': ['get', 'title'],
+                                'text-font': [
+                                    'Open Sans Semibold',
+                                    'Arial Unicode MS Bold'
+                                ],
+                                'text-offset': [0, 1.8],
+                                'text-anchor': 'top'
+                            }
+                        });
+                    }
+                );
+            },
+            cleanPins: function () {
+                if (map.getLayer("points")) {
+                    map.removeLayer('points')
+                    map.removeSource('points')
+                }
+            },
+            getPinsFromBrand: function (brand) {
+                console.log(latBusca)
+                console.log(longBusca)
+                $.ajax({
+                    url: `/home/GetPinsFromBrand`,
+                    data: {
+                        Brand: brand,
+                        Latitude: latBusca,
+                        Longitude: longBusca
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+
+                })
+                    .done(function (data) {
+                        mapFunc.setPinsInMap(map, data.features);
+                        mapFunc.buildCardsAuthorizeds(data.authorizeds);
+                    })
+            },
+            buildCardsAuthorizeds: function (authorizeds) {
+                console.log(authorizeds);
+                $(".box-card-autorizadas").html("");
+                var card = "";
+
+                if (authorizeds.length === 0) {
+                    var card = "<p style='text-align: center; width:100%; font-size: 15px;'>Nenhuma autorizada encontrada</p>";
+                } else {
+                    authorizeds.map(function (data) {
+                        card = card + ` <div class="md-clear-2 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="job-grid-style post-521 job_listing type-job_listing status-publish has-post-thumbnail
+                                            hentry job_listing_category-intertainment job_listing_category-sport job_listing_type-part-time
+                                            job_listing_amenity-accepts-credit-cards job_listing_amenity-bike-parking job_listing_amenity-elevator
+                                            job_listing_amenity-outdoor-seating job_listing_amenity-parking-street job_listing_amenity-reservations
+                                            job_listing_amenity-security-cameras job_listing_amenity-smoking-allowed
+                                            job_listing_amenity-wheelchair-accesible job_listing_amenity-wireless-internet
+                                            job_listing_region-new-york job_listing_region-usa job-type-part-time job_position_featured card-auth"
+                                            >
+                                        <div class="bottom-grid">
+                                            <div class="listing-content">
+                                                <div class="listing-content-inner clearfix item-autorizadas-title">
+                                                    <h3 class="listing-title">
+                                                        <a href="https://www.demoapus-wp1.com/findus/listing/summer-music/">${data.Nome}</a>
+                                                    </h3>
+                                                    <div class="listing-tagline">${data.Titulo}</div>
+                                                </div>
+                                            </div>
+                                            <hr style=" margin-top: 12px; margin-bottom: 5px;" />
+                                            <div class="listing-contact">
+                                                <div class="grid-contact-inner flex-middle box-itens-autorizadas">
+                                                    <div class="listing-location listing-address autorizadas-itens">
+                                                        <i class="flaticon-placeholder"></i>
+                                                        ${data.Endereco}
+                                                    </div>
+
+                                                    <div class="phone-wrapper listing-phone phone-hide autorizadas-itens">
+                                                        <a class="phone" href="tel:${data.Telefone}">
+                                                            <i class="flaticon-call"></i> ${data.Telefone}
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="listing-content-bottom">
+                                                <div class="grid-metas-inner flex-middle box-buttons">
+                                                    <a class="btn btn-theme btn-filter btn-vermais" data-id=${data.Id}>
+                                                        Ver Mais
+                                                    </a>
+                                                    <a class="btn btn-theme btn-filter btn-flyto"
+                                                            data-lat="${data.Latitude}"
+                                                            data-long="${data.Longitude}">
+                                                        Ver no Mapa
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="p-5 fancybox-content vermais-modal open-modal-${data.Id}" style="display: none;" data-width="700" data-height="700">
+                                    <h2 class="name">${data.Nome}</h2>
+                                    <hr />
+                                    <h4>Contato</h4>
+                                    <div class="contact-div">
+                                        <p class="address">${data.Endereco}</p>
+                                        <div>
+                                            <p class="phone">${data.Telefone}</p>
+                                            <p class="email">${data.Email}</p>
+                                        </div>
+                                    </div>
+                                    <a class="btn-route" target="__blank" href="https://www.google.com.br/maps/dir//${data.Endereco}/@@${data.Latitude},${data.Longitude},12z?hl=pt" >Traçar a Rota</a>
+                                    <h4>Sobre</h4>
+                                    <p style=" text-align: justify;" class="about"> ${data.Descricao}</p>
+
+                                    <h4>Horário de Funcionamento</h4>
+                                    <p class="worktime">${data.HorarioFuncionamento}</p>
+
+                                    <h4>Serviços</h4>
+                                    <p class="services">${data.Servicos}</p>
+
+
+                                </div>`
+                    });
+                }
+
+                $(".box-card-autorizadas").html(card);
+            },
+            mapFlyTo: function (lat, long) {
+                map.flyTo({
+                    center: [long, lat],
+                    zoom: 15
+                });
+            }
+        }
+
+
+    </script>
+
+}
